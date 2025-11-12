@@ -9,8 +9,7 @@ import { MusicNoteIcon, UserCheckIcon, BriefcaseIcon } from './components/icons'
 import type { Hub, NotificationMessage, Theme } from './types';
 import { LandingPage } from './components/LandingPage';
 import { DiscoverPage } from './components/DiscoverPage';
-import { testApiKey } from './services/geminiService';
-import { LoadingSpinner } from './components/LoadingSpinner';
+
 
 // --- Notification Context ---
 type NotificationContextType = {
@@ -125,27 +124,6 @@ const MainApp: React.FC<{ onBackToHubs: () => void }> = ({ onBackToHubs }) => {
 
 const AppContent: React.FC = () => {
   const [appView, setAppView] = useState<AppView>('landing');
-  const [apiKeyStatus, setApiKeyStatus] = useState<'testing' | 'valid' | 'invalid'>('testing');
-  const [apiKeyError, setApiKeyError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const checkApi = async () => {
-      try {
-        await testApiKey();
-        setApiKeyStatus('valid');
-      } catch (error) {
-        setApiKeyStatus('invalid');
-        const errorMessage = error instanceof Error ? error.message : 'An unknown API error occurred.';
-        setApiKeyError(errorMessage);
-      }
-    };
-    // This timeout is to prevent a jarring flash of the loading screen if the check is very fast.
-    const timer = setTimeout(() => {
-        checkApi();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
   
   const renderView = () => {
     switch(appView) {
@@ -159,30 +137,6 @@ const AppContent: React.FC = () => {
              return <LandingPage onLaunchApp={() => setAppView('app')} onDiscover={() => setAppView('discover')} />;
     }
   };
-
-  if (apiKeyStatus === 'testing') {
-    return (
-        <div className="min-h-screen flex flex-col items-center justify-center text-center p-4 bg-transparent">
-            <LoadingSpinner />
-            <p className="mt-4 text-lg text-[var(--accent-primary)]">Verifying API Connection...</p>
-            <p className="text-sm text-[var(--text-secondary)]">This should only take a moment.</p>
-        </div>
-    );
-  }
-
-  if (apiKeyStatus === 'invalid') {
-      return (
-          <div className="min-h-screen flex flex-col items-center justify-center text-center p-4 bg-transparent">
-              <div className="bg-red-900/50 border border-red-700 rounded-lg p-8 max-w-lg">
-                  <h2 className="text-2xl font-bold text-red-300">API Connection Failed</h2>
-                  <p className="mt-3 text-red-200">{apiKeyError}</p>
-                  <p className="mt-4 text-sm text-red-300/80">
-                      Please ensure the <code>API_KEY</code> is correctly configured in your environment and then refresh the page. This is a client-side application and requires the key to be available in the browser's execution context.
-                  </p>
-              </div>
-          </div>
-      );
-  }
 
   return (
     <div className="min-h-screen bg-transparent text-[var(--text-primary)] font-sans">
