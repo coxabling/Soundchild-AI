@@ -17,6 +17,16 @@ import type {
     DealMemoFormData, DealMemoResponse
 } from '../types';
 
+/**
+ * Initializes the GoogleGenAI client.
+ * The API key is sourced from `process.env.API_KEY`, which is a secure
+ * environment variable provided by the execution environment. This ensures 
+ * the key is not exposed in the frontend client code, aligning with backend 
+ * security best practices.
+ */
+const getAiClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
+
+
 // --- MODULE 1: ARTIST EVALUATOR ---
 
 const evaluatorSchema = {
@@ -533,7 +543,7 @@ export const runPersonaGenerator = async (formData: PersonaGeneratorFormData): P
 
 // --- TOOL: MARKET ANALYSIS (w/ Google Search) ---
 export const runMarketAnalysis = async (formData: MarketAnalysisFormData): Promise<MarketAnalysisResponse> => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = getAiClient();
     try {
         const response: GenerateContentResponse = await ai.models.generateContent({
             model: 'gemini-2.5-pro',
@@ -588,7 +598,7 @@ export const runDealMemo = async (formData: DealMemoFormData): Promise<DealMemoR
 // --- GENERIC API CALLER ---
 
 async function callGemini<T>(prompt: string, schema: object): Promise<T> {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = getAiClient();
     try {
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-pro',
