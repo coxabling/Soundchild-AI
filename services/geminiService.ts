@@ -17,8 +17,6 @@ import type {
     DealMemoFormData, DealMemoResponse
 } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 // --- MODULE 1: ARTIST EVALUATOR ---
 
 const evaluatorSchema = {
@@ -535,6 +533,7 @@ export const runPersonaGenerator = async (formData: PersonaGeneratorFormData): P
 
 // --- TOOL: MARKET ANALYSIS (w/ Google Search) ---
 export const runMarketAnalysis = async (formData: MarketAnalysisFormData): Promise<MarketAnalysisResponse> => {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     try {
         const response: GenerateContentResponse = await ai.models.generateContent({
             model: 'gemini-2.5-pro',
@@ -555,7 +554,7 @@ export const runMarketAnalysis = async (formData: MarketAnalysisFormData): Promi
 
     } catch (error) {
         console.error("Error calling Gemini API for market analysis:", error);
-        throw new Error("Failed to get market analysis from AI.");
+        throw error;
     }
 };
 
@@ -590,6 +589,7 @@ export const runDealMemo = async (formData: DealMemoFormData): Promise<DealMemoR
 // --- GENERIC API CALLER ---
 
 async function callGemini<T>(prompt: string, schema: object): Promise<T> {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     try {
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-pro',
@@ -610,6 +610,6 @@ async function callGemini<T>(prompt: string, schema: object): Promise<T> {
         if (error instanceof SyntaxError) {
             console.error("Failed to parse JSON response from API.");
         }
-        throw new Error("Failed to get analysis from AI. The response may be malformed.");
+        throw error;
     }
 }

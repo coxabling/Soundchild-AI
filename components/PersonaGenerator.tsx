@@ -1,9 +1,10 @@
+
 import React, { useState } from 'react';
 import { runPersonaGenerator } from '../services/geminiService';
 import type { PersonaGeneratorResponse, PersonaGeneratorFormData } from '../types';
 import { LoadingSpinner } from './LoadingSpinner';
 import { SparklesIcon, Users2Icon } from './icons';
-import { useNotification } from '../App';
+import { useApiKey, useNotification } from '../App';
 
 // Mock data representing the curator's profile
 const mockCuratorData: PersonaGeneratorFormData = {
@@ -20,6 +21,7 @@ export const PersonaGenerator: React.FC = () => {
     const [result, setResult] = useState<PersonaGeneratorResponse | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const { addNotification } = useNotification();
+    const { resetKeySelection } = useApiKey();
     
     const handleGenerate = async () => {
         setIsLoading(true);
@@ -29,6 +31,9 @@ export const PersonaGenerator: React.FC = () => {
             setResult(response);
             addNotification({ message: 'Audience personas generated!', type: 'success' });
         } catch (error) {
+            if (error instanceof Error && error.message.includes("Requested entity was not found")) {
+                resetKeySelection();
+            }
             addNotification({ message: error instanceof Error ? error.message : 'An unknown error occurred.', type: 'error' });
         } finally {
             setIsLoading(false);

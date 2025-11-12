@@ -1,10 +1,10 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI, Chat } from '@google/genai';
 import type { ChatMessage } from '../types';
 import { LoadingSpinner } from './LoadingSpinner';
 import { SendIcon, SparklesIcon, BarChartIcon, LightbulbIcon } from './icons';
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+import { useApiKey } from '../App';
 
 const systemInstruction = `You are Soundchild Career Advisor — a professional A&R and artist career strategist. Your goal is to provide actionable, data-driven, and encouraging advice to artists. You have context on their past campaigns, track evaluations, and performance data. Use this knowledge to offer personalized guidance on what to produce next, which curators to target, how to improve their brand, and how to navigate the music industry. Always be supportive and focus on strategic growth.`;
 
@@ -37,9 +37,11 @@ export const CareerAdvisor: React.FC = () => {
     const [input, setInput] = useState<string>('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const [error, setError] = useState<string | null>(null);
+    const { resetKeySelection } = useApiKey();
 
     useEffect(() => {
         const initChat = () => {
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
             const newChat = ai.chats.create({
                 model: 'gemini-2.5-pro',
                 config: {
@@ -87,6 +89,9 @@ export const CareerAdvisor: React.FC = () => {
                 });
             }
         } catch (err) {
+            if (err instanceof Error && err.message.includes("Requested entity was not found")) {
+                resetKeySelection();
+            }
             const errorMessage = "Sorry, I encountered an error. Please try again.";
             setError(errorMessage);
             setMessages(prev => [...prev, { role: 'model', parts: [{ text: errorMessage }] }]);

@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import type { GenreTrend, UnsignedArtist, ScoutingFormData, ScoutingResponse, ArtistProfileData, MarketAnalysisFormData, MarketAnalysisResponse, DealMemoFormData, DealMemoResponse } from '../types';
-import { useNotification } from '../App';
+import { useApiKey, useNotification } from '../App';
 import { runScoutingAssistant, runMarketAnalysis, runDealMemo } from '../services/geminiService';
 import { BarChartIcon, CheckCircleIcon, TelescopeIcon, Globe2Icon, HandshakeIcon, LinkIcon, AlertTriangleIcon } from './icons';
 import { LoadingSpinner } from './LoadingSpinner';
@@ -78,6 +78,7 @@ const ScoutingTab: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [viewingProfile, setViewingProfile] = useState<ArtistProfileData | null>(null);
     const { addNotification } = useNotification();
+    const { resetKeySelection } = useApiKey();
 
     const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFilters(prev => ({ ...prev, [e.target.id]: e.target.value }));
@@ -92,6 +93,9 @@ const ScoutingTab: React.FC = () => {
             setResults(response);
             addNotification({ message: 'AI scouting complete!', type: 'success' });
         } catch (err) {
+            if (err instanceof Error && err.message.includes("Requested entity was not found")) {
+                resetKeySelection();
+            }
             const errorMessage = err instanceof Error ? `Scouting failed: ${err.message}` : 'An unknown error occurred.';
             setError(errorMessage);
             addNotification({ message: errorMessage, type: 'error' });
@@ -230,6 +234,7 @@ const MarketAnalysisTab: React.FC = () => {
     const [result, setResult] = useState<MarketAnalysisResponse | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const { addNotification } = useNotification();
+    const { resetKeySelection } = useApiKey();
 
     const handleAnalyze = async () => {
         setIsLoading(true);
@@ -239,6 +244,9 @@ const MarketAnalysisTab: React.FC = () => {
             setResult(response);
             addNotification({ message: 'Market analysis complete!', type: 'success' });
         } catch (error) {
+            if (error instanceof Error && error.message.includes("Requested entity was not found")) {
+                resetKeySelection();
+            }
             addNotification({ message: error instanceof Error ? error.message : 'An unknown error occurred.', type: 'error' });
         } finally {
             setIsLoading(false);
@@ -275,6 +283,7 @@ const DealMemoTab: React.FC = () => {
     const [result, setResult] = useState<DealMemoResponse | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const { addNotification } = useNotification();
+    const { resetKeySelection } = useApiKey();
     
     const handleDraft = async () => {
         setIsLoading(true);
@@ -284,6 +293,9 @@ const DealMemoTab: React.FC = () => {
             setResult(response);
             addNotification({ message: 'Deal memo drafted!', type: 'success' });
         } catch (error) {
+            if (error instanceof Error && error.message.includes("Requested entity was not found")) {
+                resetKeySelection();
+            }
             addNotification({ message: error instanceof Error ? error.message : 'An unknown error occurred.', type: 'error' });
         } finally {
             setIsLoading(false);

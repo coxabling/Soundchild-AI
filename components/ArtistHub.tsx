@@ -7,7 +7,7 @@ import { BarChartIcon, ClipboardListIcon, GitCompareArrowsIcon, InboxIcon, Messa
 import type { AllAnalysisResponses, AllFormData, Tool, ArtistAnalytics, SpotifyAnalytics, NeighborhoodsFormData, WalletData, CuratorProfileData, Submission, Conversation, LyricAnalyzerFormData } from '../types';
 import { runArtistEvaluation, runCampaignOptimization, runPitchWriter, runSmartFollowUp, runSoundNeighborhoods, runRemixABTest, runFeedbackSynthesizer, runLyricAnalyzer } from '../services/geminiService';
 import { Wallet } from './Wallet';
-import { useNotification } from '../App';
+import { useApiKey, useNotification } from '../App';
 import { getCuratorProfile, getConversations } from '../services/mockData';
 import { CuratorProfile } from './CuratorProfile';
 import { CampaignPerformance } from './CampaignPerformance';
@@ -192,6 +192,7 @@ export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const [isSubModalOpen, setIsSubModalOpen] = useState(false);
     const [conversations, setConversations] = useState<Conversation[]>(() => getConversations('artist'));
     const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+    const { resetKeySelection } = useApiKey();
     
     const handleFormSubmit = async (formData: AllFormData, tool: Tool) => {
         setIsLoading(true);
@@ -231,6 +232,9 @@ export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             setAnalysis(result);
             if(tool === 'neighborhoods') setActiveTool('neighborhoods');
         } catch (err) {
+            if (err instanceof Error && err.message.includes("Requested entity was not found")) {
+                resetKeySelection();
+            }
             setError(err instanceof Error ? `Analysis failed: ${err.message}` : 'An unknown error occurred.');
         } finally {
             setIsLoading(false);
