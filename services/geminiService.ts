@@ -585,6 +585,33 @@ export const runDealMemo = async (formData: DealMemoFormData): Promise<DealMemoR
     return callGemini(prompt, dealMemoSchema);
 }
 
+// --- API KEY TEST ---
+export const testApiKey = async (): Promise<string> => {
+    try {
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: 'Respond with only the word "ok".',
+        });
+        const text = response.text.trim();
+        if (text.toLowerCase() !== 'ok') {
+            throw new Error('API test returned an unexpected response.');
+        }
+        return text;
+    } catch (error) {
+        console.error("API Key Test Failed:", error);
+        if (error instanceof Error) {
+            if (error.message.includes('API key not valid')) {
+                throw new Error('The provided API Key is not valid. Please check your environment configuration.');
+            }
+            if (error.message.includes('must be set')) {
+                throw new Error('API Key is missing. Please ensure the API_KEY environment variable is set correctly.');
+            }
+        }
+        throw new Error('Failed to connect to the API. The service may be temporarily unavailable or the API key is invalid.');
+    }
+};
+
 
 // --- GENERIC API CALLER ---
 
