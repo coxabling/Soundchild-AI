@@ -9,7 +9,6 @@ import { MusicNoteIcon, UserCheckIcon, BriefcaseIcon } from './components/icons'
 import type { Hub, NotificationMessage, Theme } from './types';
 import { LandingPage } from './components/LandingPage';
 import { DiscoverPage } from './components/DiscoverPage';
-import { LoadingSpinner } from './components/LoadingSpinner';
 
 // --- Notification Context ---
 type NotificationContextType = {
@@ -42,92 +41,6 @@ const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     </NotificationContext.Provider>
   );
 };
-
-// --- ApiKey Context ---
-type ApiKeyContextType = {
-  resetKeySelection: () => void;
-};
-const ApiKeyContext = createContext<ApiKeyContextType | undefined>(undefined);
-export const useApiKey = () => {
-    const context = useContext(ApiKeyContext);
-    if (!context) throw new Error('useApiKey must be used within an ApiKeyProvider');
-    return context;
-};
-
-const ApiKeyProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-    const [isKeySelected, setIsKeySelected] = useState<boolean | null>(null);
-
-    const checkKey = useCallback(async () => {
-        try {
-            // @ts-ignore
-            const hasKey = await window.aistudio.hasSelectedApiKey();
-            setIsKeySelected(hasKey);
-        } catch (e) {
-            console.error("Error checking for API key:", e);
-            setIsKeySelected(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        checkKey();
-    }, [checkKey]);
-    
-    const resetKeySelection = useCallback(() => {
-        setIsKeySelected(false);
-    }, []);
-
-    const handleSelectKey = async () => {
-        try {
-            // @ts-ignore
-            await window.aistudio.openSelectKey();
-            setIsKeySelected(true);
-        } catch (e) {
-            console.error("Error opening select key dialog:", e);
-        }
-    };
-    
-    if (isKeySelected === null) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
-                <LoadingSpinner />
-            </div>
-        );
-    }
-
-    if (!isKeySelected) {
-        return (
-             <div className="min-h-screen flex items-center justify-center text-center p-4 bg-[var(--background)]" style={{
-                backgroundImage: 'radial-gradient(at 0% 0%, var(--background-gradient-start) 0, transparent 50%), radial-gradient(at 98% 1%, var(--background-gradient-end) 0, transparent 50%)'
-             }}>
-                 <div className="bg-[var(--surface-primary)]/50 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-[var(--border)] max-w-lg">
-                    <h2 className="text-3xl font-extrabold text-[var(--text-primary)] mb-4">API Key Required</h2>
-                    <p className="text-[var(--text-secondary)] mb-6">
-                        To use Soundchild.ai, you need to select a Google AI Studio API key. Your key is stored securely and is only used for the duration of your session.
-                    </p>
-                    <button
-                        onClick={handleSelectKey}
-                        className="w-full px-8 py-3 bg-[var(--accent-secondary)] hover:bg-[var(--accent-secondary-hover)] text-white font-bold rounded-full text-lg transition-all transform hover:scale-105 shadow-lg"
-                    >
-                        Select API Key
-                    </button>
-                    <p className="text-xs text-[var(--text-tertiary)] mt-4">
-                        For more information on API keys and billing, please visit the{' '}
-                        <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer" className="text-[var(--accent-primary)] hover:underline">
-                            billing documentation
-                        </a>.
-                    </p>
-                </div>
-            </div>
-        );
-    }
-    
-    return (
-        <ApiKeyContext.Provider value={{ resetKeySelection }}>
-            {children}
-        </ApiKeyContext.Provider>
-    );
-};
-
 
 // --- Theme Context ---
 type ThemeContextType = {
@@ -240,9 +153,7 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => (
     <ThemeProvider>
         <NotificationProvider>
-            <ApiKeyProvider>
-                <AppContent />
-            </ApiKeyProvider>
+            <AppContent />
         </NotificationProvider>
     </ThemeProvider>
 );

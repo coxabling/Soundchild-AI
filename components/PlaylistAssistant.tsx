@@ -4,7 +4,7 @@ import { runPlaylistAssistant } from '../services/geminiService';
 import type { PlaylistAssistantResponse, PlaylistAssistantFormData } from '../types';
 import { LoadingSpinner } from './LoadingSpinner';
 import { MusicNoteIcon, SparklesIcon, ListMusicIcon, SpotifyIcon } from './icons';
-import { useApiKey, useNotification } from '../App';
+import { useNotification } from '../App';
 
 const mockAcceptedTracks = [
     { title: 'Neon Tides', artist: 'Luna Bloom' },
@@ -22,7 +22,6 @@ export const PlaylistAssistant: React.FC = () => {
     const [result, setResult] = useState<PlaylistAssistantResponse | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const { addNotification } = useNotification();
-    const { resetKeySelection } = useApiKey();
 
     const handleGenerate = async () => {
         setIsLoading(true);
@@ -36,9 +35,6 @@ export const PlaylistAssistant: React.FC = () => {
             setResult(response);
             addNotification({ message: 'Playlist generated successfully!', type: 'success' });
         } catch (error) {
-             if (error instanceof Error && error.message.includes("Requested entity was not found")) {
-                resetKeySelection();
-             }
              addNotification({ message: error instanceof Error ? error.message : 'An unknown error occurred.', type: 'error' });
         } finally {
             setIsLoading(false);

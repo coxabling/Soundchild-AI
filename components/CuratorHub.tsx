@@ -12,7 +12,6 @@ import { ArtistProfile } from './ArtistProfile';
 import { Messaging } from './Messaging';
 import { PlaylistAssistant } from './PlaylistAssistant';
 import { PersonaGenerator } from './PersonaGenerator';
-import { useApiKey } from '../App';
 
 const mockSubmissions: Submission[] = [
     { id: 'sub1', artist_name: 'Luna Bloom', track_title: 'Neon Tides', genre: 'Synthwave', mood: 'Nostalgic, Driving', pitch: "Hey! My new track 'Neon Tides' is a throwback to classic 80s synthwave with a modern twist. Think Kavinsky meets The Midnight. Hope you enjoy the ride!", status: 'reviewed', aiFitScore: 88, description: 'An 80s inspired synthwave track with driving basslines and dreamy pads.', loudness: '-8', energy: 0.8, valence: 0.6, performanceDataId: 'perf1' },
@@ -170,7 +169,6 @@ export const CuratorHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const [viewingProfile, setViewingProfile] = useState<ArtistProfileData | null>(null);
     const [conversations, setConversations] = useState<Conversation[]>(() => getConversations('curator'));
     const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
-    const { resetKeySelection } = useApiKey();
 
 
     const handleSelectSubmission = (submission: Submission) => {
@@ -194,9 +192,6 @@ export const CuratorHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             const result = await runCuratorAssistant(formData as CuratorFormData);
             setAnalysis(result);
         } catch (err) {
-            if (err instanceof Error && err.message.includes("Requested entity was not found")) {
-                resetKeySelection();
-            }
             setError(err instanceof Error ? `Analysis failed: ${err.message}` : 'An unknown error occurred.');
         } finally {
             setIsLoading(false);
