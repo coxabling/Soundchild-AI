@@ -1,3 +1,4 @@
+
 export type Tool = 'evaluator' | 'curator' | 'optimizer' | 'pitchWriter' | 'followUp' | 'neighborhoods' | 'scouting' | 'remixABTest' | 'feedbackSynthesizer' | 'lyricAnalyzer' | 'marketAnalysis' | 'dealMemo';
 export type Hub = 'artist' | 'curator' | 'label';
 export type Theme = 'light' | 'dark';

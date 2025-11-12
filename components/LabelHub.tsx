@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import type { GenreTrend, UnsignedArtist, ScoutingFormData, ScoutingResponse, ArtistProfileData, MarketAnalysisFormData, MarketAnalysisResponse, DealMemoFormData, DealMemoResponse } from '../types';
 import { useNotification } from '../App';

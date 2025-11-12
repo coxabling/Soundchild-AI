@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import type { AllAnalysisResponses, Tool, EvaluatorResponse, CuratorResponse, OptimizerResponse, PitchWriterResponse, FollowUpResponse, NeighborhoodsResponse, Submission, RemixABTestResponse, FeedbackSynthesizerResponse, LyricAnalyzerResponse } from '../types';
 import { TargetIcon, ClipboardIcon, TelescopeIcon, RefreshIcon, CheckCircleIcon, AlertTriangleIcon, BarChartIcon, UserCheckIcon, SendIcon, InfoIcon, SpotifyIcon, UsersIcon, MessageSquareIcon, StarIcon, GitCompareArrowsIcon, ClipboardListIcon, SparklesIcon, PenSquareIcon } from './icons';
