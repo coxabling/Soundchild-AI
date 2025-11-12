@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF--8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soundchild.ai | Where Music Meets Measured Discovery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --background: #020617; /* Slate 950 */
+        --background-gradient-start: rgb(14, 23, 44);
+        --background-gradient-end: rgb(12, 36, 70);
+        --surface-primary: #1e293b; /* Slate 800 */
+        --surface-secondary: #334155; /* Slate 700 */
+        --surface-tertiary: #475569; /* Slate 600 */
+        --border: #334155; /* Slate 700 */
+        --border-secondary: #475569; /* Slate 600 */
+        
+        --text-primary: #f1f5f9; /* Slate 100 */
+        --text-secondary: #94a3b8; /* Slate 400 */
+        --text-tertiary: #64748b; /* Slate 500 */
+        
+        --accent-primary: #22d3ee; /* Sky 400 */
+        --accent-primary-hover: #67e8f9; /* Sky 300 */
+        --accent-secondary: #0891b2; /* Sky 600 */
+        --accent-secondary-hover: #06b6d4; /* Sky 500 */
+        
+        --positive: #4ade80; /* Green 400 */
+        --negative: #f87171; /* Red 400 */
+        --warning: #facc15; /* Yellow 400 */
+        
+        --shadow-color-strong: rgba(0, 0, 0, 0.5);
+        --shadow-color-medium: rgba(0, 0, 0, 0.3);
+      }
+
+      html[data-theme='light'] {
+        --background: #f1f5f9; /* Slate 100 */
+        --background-gradient-start: rgb(226, 232, 240);
+        --background-gradient-end: rgb(203, 213, 225);
+        --surface-primary: #ffffff; /* White */
+        --surface-secondary: #f1f5f9; /* Slate 100 */
+        --surface-tertiary: #e2e8f0; /* Slate 200 */
+        --border: #e2e8f0; /* Slate 200 */
+        --border-secondary: #cbd5e1; /* Slate 300 */
+
+        --text-primary: #0f172a; /* Slate 900 */
+        --text-secondary: #475569; /* Slate 600 */
+        --text-tertiary: #94a3b8; /* Slate 400 */
+
+        --accent-primary: #0ea5e9; /* Sky 500 */
+        --accent-primary-hover: #0284c7; /* Sky 600 */
+        --accent-secondary: #0369a1; /* Sky 700 */
+        --accent-secondary-hover: #075985; /* Sky 800 */
+        
+        --positive: #22c55e; /* Green 500 */
+        --negative: #ef4444; /* Red 500 */
+        --warning: #eab308; /* Yellow 500 */
+        
+        --shadow-color-strong: rgba(0, 0, 0, 0.1);
+        --shadow-color-medium: rgba(0, 0, 0, 0.05);
+      }
+      
+      body {
+        background-color: var(--background);
+        color: var(--text-primary);
+        background-image: radial-gradient(at 0% 0%, var(--background-gradient-start) 0, transparent 50%), radial-gradient(at 98% 1%, var(--background-gradient-end) 0, transparent 50%);
+        transition: background-color 0.3s, color 0.3s;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
