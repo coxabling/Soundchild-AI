@@ -78,17 +78,17 @@ const HubSelector: React.FC<{ onSelect: (hub: Hub) => void }> = ({ onSelect }) =
             <button onClick={() => onSelect('artist')} className="p-6 text-left bg-[var(--surface-secondary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border-secondary)] transition-all transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]">
                 <MusicNoteIcon className="w-10 h-10 text-[var(--accent-primary)] mb-4" />
                 <h3 className="text-xl font-bold text-[var(--text-primary)]">Artist Hub</h3>
-                <p className="text-[var(--text-secondary)] mt-2 text-sm">Analyze tracks, optimize campaigns, and get AI assistance for your release strategy.</p>
+                <p className="text-[var(--text-secondary)] mt-2 text-sm">Connect with curators, analyze tracks, optimize campaigns, and get AI assistance for your release strategy.</p>
             </button>
             <button onClick={() => onSelect('curator')} className="p-6 text-left bg-[var(--surface-secondary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border-secondary)] transition-all transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]">
                 <UserCheckIcon className="w-10 h-10 text-[var(--accent-primary)] mb-4" />
                 <h3 className="text-xl font-bold text-[var(--text-primary)]">Curator Hub</h3>
-                <p className="text-[var(--text-secondary)] mt-2 text-sm">Streamline your workflow with an AI-powered submission queue and review assistant.</p>
+                <p className="text-[var(--text-secondary)] mt-2 text-sm">Connect with artists, streamline your workflow with an AI-powered submission queue, and get fairly compensated.</p>
             </button>
             <button onClick={() => onSelect('label')} className="p-6 text-left bg-[var(--surface-secondary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border-secondary)] transition-all transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]">
                 <BriefcaseIcon className="w-10 h-10 text-[var(--accent-primary)] mb-4" />
                 <h3 className="text-xl font-bold text-[var(--text-primary)]">Label & A&R Hub</h3>
-                <p className="text-[var(--text-secondary)] mt-2 text-sm">Discover unsigned talent and track emerging genre trends with our AI scouting tools.</p>
+                <p className="text-[var(--text-secondary)] mt-2 text-sm">Discover unsigned talent, connect with artists, and track emerging genre trends with our AI scouting tools.</p>
             </button>
         </div>
     </div>

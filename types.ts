@@ -91,6 +91,8 @@ export interface CampaignPerformanceData {
     roi: number; // multiplier
 }
 
+export type SubmissionStatus = 'pending' | 'reviewed' | 'accepted' | 'declined';
+
 export interface Submission {
   id: string;
   artist_name: string;
@@ -102,8 +104,9 @@ export interface Submission {
   loudness: string;
   energy: number;
   valence: number;
-  status: 'pending' | 'reviewed';
+  status: SubmissionStatus;
   aiFitScore: number;
+  curatorName?: string; // For artist view
   reviewHelpfulness?: number;
   performanceDataId?: string; // Link to performance report
 }
@@ -426,5 +429,5 @@ export interface DealMemoResponse {
 
 
 // Union Types
-export type AllFormData = EvaluatorFormData | CuratorFormData | OptimizerFormData | PitchWriterFormData | FollowUpFormData | NeighborhoodsFormData | ScoutingFormData | RemixABTestFormData | FeedbackSynthesizerFormData | LyricAnalyzerFormData;
-export type AllAnalysisResponses = EvaluatorResponse | CuratorResponse | OptimizerResponse | PitchWriterResponse | FollowUpResponse | NeighborhoodsResponse | ScoutingResponse | RemixABTestResponse | FeedbackSynthesizerResponse | LyricAnalyzerResponse;
+export type AllFormData = EvaluatorFormData | CuratorFormData | OptimizerFormData | PitchWriterFormData | FollowUpFormData | NeighborhoodsFormData | ScoutingFormData | RemixABTestFormData | FeedbackSynthesizerFormData | LyricAnalyzerFormData | MarketAnalysisFormData;
+export type AllAnalysisResponses = EvaluatorResponse | CuratorResponse | OptimizerResponse | PitchWriterResponse | FollowUpResponse | NeighborhoodsResponse | ScoutingResponse | RemixABTestResponse | FeedbackSynthesizerResponse | LyricAnalyzerResponse | MarketAnalysisResponse;

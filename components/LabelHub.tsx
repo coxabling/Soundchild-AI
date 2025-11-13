@@ -7,6 +7,7 @@ import { BarChartIcon, CheckCircleIcon, TelescopeIcon, Globe2Icon, HandshakeIcon
 import { LoadingSpinner } from './LoadingSpinner';
 import { getArtistProfile } from '../services/mockData';
 import { ArtistProfile } from './ArtistProfile';
+import { AnalysisDisplay } from './AnalysisDisplay';
 
 const mockTrends: GenreTrend[] = [
     { genre: 'Hyperpop', growth: 45 },
@@ -156,75 +157,6 @@ const ScoutingTab: React.FC = () => {
     )
 }
 
-const MarketAnalysisReport: React.FC<{
-    analysis: MarketAnalysisResponse;
-    query: MarketAnalysisFormData;
-}> = ({ analysis, query }) => {
-    const sections = useMemo(() => {
-        const parts = analysis.analysis_text.split(/###\s(.+)/).filter(part => part && part.trim() !== '');
-        const structuredSections: { title: string; content: string }[] = [];
-        for (let i = 0; i < parts.length; i += 2) {
-            if (parts[i] && parts[i + 1]) {
-                structuredSections.push({
-                    title: parts[i].trim(),
-                    content: parts[i + 1].trim(),
-                });
-            } else if (parts[i] && structuredSections.length === 0) {
-                structuredSections.push({ title: "Market Overview", content: parts[i].trim() });
-            }
-        }
-        return structuredSections;
-    }, [analysis.analysis_text]);
-
-    const renderContent = (content: string) => (
-        <div className="text-sm text-[var(--text-secondary)] space-y-2">
-            {content.split('\n').map((line, i) => {
-                if (line.trim().startsWith('- ')) {
-                    return <p key={i} className="pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-[var(--accent-primary)]">{line.trim().substring(2)}</p>;
-                }
-                if (line.trim() === '') return null;
-                return <p key={i}>{line}</p>;
-            })}
-        </div>
-    );
-
-    return (
-        <div className="animate-fade-in space-y-6">
-            <h3 className="text-2xl font-bold text-center text-[var(--text-primary)]">Market Analysis Report: <span className="text-[var(--accent-primary)]">{query.genre} in {query.location}</span></h3>
-            
-            <div className="space-y-6">
-                {sections.length > 0 ? sections.map(section => (
-                    <div key={section.title} className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg p-5">
-                         <h4 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-3">{section.title}</h4>
-                         {renderContent(section.content)}
-                    </div>
-                )) : (
-                    <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg p-5">
-                        <h4 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-3">Analysis</h4>
-                        {renderContent(analysis.analysis_text)}
-                    </div>
-                )}
-            </div>
-
-            {analysis.sources.length > 0 && (
-                <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg p-5">
-                    <h4 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-3">Data Sources from Google Search</h4>
-                    <ul className="space-y-2">
-                        {analysis.sources.map((source, i) => (
-                            <li key={i}>
-                                <a href={source.uri} target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--accent-primary)] hover:underline flex items-center gap-2 group">
-                                   <LinkIcon className="w-4 h-4 text-[var(--text-tertiary)] group-hover:text-[var(--accent-primary)] transition-colors" /> 
-                                   <span className="truncate">{source.title || (source.uri && new URL(source.uri).hostname)}</span>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </div>
-    );
-};
-
 const MarketAnalysisTab: React.FC = () => {
     const [formData, setFormData] = useState<MarketAnalysisFormData>({ genre: 'Afro-Soul', location: 'Berlin' });
     const [result, setResult] = useState<MarketAnalysisResponse | null>(null);
@@ -264,7 +196,12 @@ const MarketAnalysisTab: React.FC = () => {
             </div>
             {isLoading && <div className="text-center p-8"><LoadingSpinner/></div>}
             {result && (
-                 <MarketAnalysisReport analysis={result} query={formData} />
+                 <AnalysisDisplay
+                    analysis={result}
+                    tool="marketAnalysis"
+                    onReset={() => setResult(null)}
+                    formData={formData}
+                 />
             )}
         </div>
     )

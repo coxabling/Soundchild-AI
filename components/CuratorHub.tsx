@@ -14,7 +14,7 @@ import { PlaylistAssistant } from './PlaylistAssistant';
 import { PersonaGenerator } from './PersonaGenerator';
 
 const mockSubmissions: Submission[] = [
-    { id: 'sub1', artist_name: 'Luna Bloom', track_title: 'Neon Tides', genre: 'Synthwave', mood: 'Nostalgic, Driving', pitch: "Hey! My new track 'Neon Tides' is a throwback to classic 80s synthwave with a modern twist. Think Kavinsky meets The Midnight. Hope you enjoy the ride!", status: 'reviewed', aiFitScore: 88, description: 'An 80s inspired synthwave track with driving basslines and dreamy pads.', loudness: '-8', energy: 0.8, valence: 0.6, performanceDataId: 'perf1' },
+    { id: 'sub1', artist_name: 'Luna Bloom', track_title: 'Neon Tides', genre: 'Synthwave', mood: 'Nostalgic, Driving', pitch: "Hey! My new track 'Neon Tides' is a throwback to classic 80s synthwave with a modern twist. Think Kavinsky meets The Midnight. Hope you enjoy the ride!", status: 'accepted', aiFitScore: 88, description: 'An 80s inspired synthwave track with driving basslines and dreamy pads.', loudness: '-8', energy: 0.8, valence: 0.6, performanceDataId: 'perf1' },
     { id: 'sub2', artist_name: 'Sol', track_title: 'Morning Mist', genre: 'Lofi Hip-Hop', mood: 'Chill, Reflective', pitch: "Hey, here's my latest lofi beat, 'Morning Mist'. It's super chill, perfect for a study or relax playlist. Let me know what you think.", status: 'reviewed', aiFitScore: 75, description: 'A calming lofi hip-hop track with vinyl crackle and a soothing piano melody.', loudness: '-12', energy: 0.3, valence: 0.4, performanceDataId: 'perf2' },
     { id: 'sub3', artist_name: 'The Fuse', track_title: 'Riot', genre: 'Indie Rock', mood: 'Energetic, Raw', pitch: 'Our new single "Riot" is a high-energy indie rock anthem. If you like bands like The Strokes or Arctic Monkeys, this should be right up your alley.', status: 'pending', aiFitScore: 62, description: 'A garage rock track with fuzzy guitars and powerful vocals.', loudness: '-6', energy: 0.9, valence: 0.7 },
 ];
@@ -191,6 +191,15 @@ export const CuratorHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         try {
             const result = await runCuratorAssistant(formData as CuratorFormData);
             setAnalysis(result);
+
+            // Unify submission status
+            if (selectedSubmission) {
+                const newStatus = result.decision === 'accept' ? 'accepted' : 'declined';
+                setSubmissions(prev => 
+                    prev.map(sub => sub.id === selectedSubmission.id ? { ...sub, status: newStatus } : sub)
+                );
+            }
+
         } catch (err) {
             setError(err instanceof Error ? `Analysis failed: ${err.message}` : 'An unknown error occurred.');
         } finally {
@@ -203,7 +212,7 @@ export const CuratorHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
         const updatedSubmissions = submissions.map(s => 
             s.id === selectedSubmission.id 
-            ? { ...s, status: 'reviewed', reviewHelpfulness: rating } 
+            ? { ...s, reviewHelpfulness: rating } 
             : s
         );
         setSubmissions(updatedSubmissions);

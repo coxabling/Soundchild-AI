@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { MusicUploadForm } from './MusicUploadForm';
 import { AnalysisDisplay } from './AnalysisDisplay';
 import { LoadingSpinner } from './LoadingSpinner';
-import { BarChartIcon, ClipboardListIcon, GitCompareArrowsIcon, InboxIcon, MessageSquareIcon, MusicNoteIcon, SendIcon, SpotifyIcon, TelescopeIcon, WalletIcon, CrownIcon, PenSquareIcon, MessageCircleIcon, UsersIcon } from './icons';
-import type { AllAnalysisResponses, AllFormData, Tool, ArtistAnalytics, SpotifyAnalytics, NeighborhoodsFormData, WalletData, CuratorProfileData, Submission, Conversation, LyricAnalyzerFormData } from '../types';
-import { runArtistEvaluation, runCampaignOptimization, runPitchWriter, runSmartFollowUp, runSoundNeighborhoods, runRemixABTest, runFeedbackSynthesizer, runLyricAnalyzer } from '../services/geminiService';
+import { BarChartIcon, ClipboardListIcon, GitCompareArrowsIcon, InboxIcon, MessageSquareIcon, MusicNoteIcon, SendIcon, SpotifyIcon, TelescopeIcon, WalletIcon, CrownIcon, PenSquareIcon, MessageCircleIcon, UsersIcon, Globe2Icon, CheckCircleIcon, AlertTriangleIcon } from './icons';
+import type { AllAnalysisResponses, AllFormData, Tool, ArtistAnalytics, SpotifyAnalytics, NeighborhoodsFormData, WalletData, CuratorProfileData, Submission, Conversation, LyricAnalyzerFormData, MarketAnalysisFormData } from '../types';
+import { runArtistEvaluation, runCampaignOptimization, runPitchWriter, runSmartFollowUp, runSoundNeighborhoods, runRemixABTest, runFeedbackSynthesizer, runLyricAnalyzer, runMarketAnalysis } from '../services/geminiService';
 import { Wallet } from './Wallet';
 import { useNotification } from '../App';
 import { getCuratorProfile, getConversations } from '../services/mockData';
@@ -28,6 +28,12 @@ const mockSpotifyAnalytics: SpotifyAnalytics = {
     saves: 8320,
     playlistAdds: 127,
 };
+
+const mockArtistSubmissions: Submission[] = [
+    { id: 'sub1', artist_name: 'Luna Bloom', track_title: 'Neon Tides', curatorName: 'Synthwave Central', genre: 'Synthwave', mood: 'Nostalgic, Driving', pitch: "", status: 'accepted', aiFitScore: 88, description: '', loudness: '', energy: 0, valence: 0, performanceDataId: 'perf1' },
+    { id: 'sub2', artist_name: 'Luna Bloom', track_title: 'Sunset Fader', curatorName: 'Electronic Gems', genre: 'Synthwave', mood: 'Chill', pitch: "", status: 'declined', aiFitScore: 65, description: '', loudness: '', energy: 0, valence: 0 },
+    { id: 'sub3', artist_name: 'Luna Bloom', track_title: 'Starlight Runner', curatorName: 'Retrowave Dreams', genre: 'Retrowave', mood: 'Energetic', pitch: "", status: 'pending', aiFitScore: 0, description: '', loudness: '', energy: 0, valence: 0 },
+];
 
 const mockArtistWallet: WalletData = {
     balance: 75.50,
@@ -154,6 +160,10 @@ const ArtistDashboard: React.FC<{
                         <ClipboardListIcon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">AI Report Card</h4>
                     </button>
+                    <button onClick={() => onToolSelect('marketAnalysis')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                        <Globe2Icon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
+                        <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">Market Analysis</h4>
+                    </button>
                 </div>
             </div>
              <div>
@@ -180,23 +190,76 @@ const ArtistDashboard: React.FC<{
     );
 };
 
+const ArtistSubmissions: React.FC<{ submissions: Submission[] }> = ({ submissions }) => {
+    const StatusIndicator = ({ status }: { status: Submission['status'] }) => {
+        const config = {
+            pending: { text: 'Pending', icon: <div className="w-2 h-2 rounded-full bg-[var(--warning)] animate-pulse" />, color: 'text-yellow-300' },
+            accepted: { text: 'Accepted', icon: <CheckCircleIcon className="w-4 h-4" />, color: 'text-[var(--positive)]' },
+            declined: { text: 'Declined', icon: <AlertTriangleIcon className="w-4 h-4" />, color: 'text-[var(--negative)]' },
+            reviewed: { text: 'Reviewed', icon: <ClipboardListIcon className="w-4 h-4" />, color: 'text-sky-300' },
+        }[status];
+
+        return (
+            <div className={`flex items-center gap-2 text-sm font-medium ${config.color}`}>
+                {config.icon}
+                <span>{config.text}</span>
+            </div>
+        );
+    };
+
+    return (
+        <div className="space-y-6">
+            <div>
+                <h3 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-4 flex items-center gap-2">
+                    <SendIcon className="w-5 h-5" />
+                    My Submissions
+                </h3>
+                <p className="text-sm text-[var(--text-secondary)] mb-4">Track the status of all your submissions in one place.</p>
+            </div>
+            <div className="space-y-3">
+                {submissions.map(sub => (
+                    <div key={sub.id} className="p-4 bg-[var(--surface-secondary)]/30 rounded-lg border border-[var(--border)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div className="flex-grow">
+                            <p className="font-bold text-lg text-[var(--text-primary)]">{sub.track_title}</p>
+                            <p className="text-sm text-[var(--text-secondary)]">
+                                Submitted to <span className="font-medium text-[var(--accent-primary-hover)]">{sub.curatorName}</span>
+                            </p>
+                        </div>
+                        <div className="w-full md:w-auto flex items-center justify-between gap-4">
+                            <StatusIndicator status={sub.status} />
+                            <button
+                                disabled={sub.status === 'pending'}
+                                className="px-4 py-2 bg-[var(--accent-secondary)] hover:bg-[var(--accent-secondary-hover)] text-white font-semibold rounded-md text-sm transition-colors disabled:bg-[var(--surface-tertiary)] disabled:cursor-not-allowed"
+                            >
+                                View Report
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 
 export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const [activeTool, setActiveTool] = useState<Tool | null>(null);
     const [analysis, setAnalysis] = useState<AllAnalysisResponses | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [activeTab, setActiveTab] = useState<'dashboard' | 'advisor' | 'discoverCurators' | 'campaigns' | 'messages' | 'wallet'>('dashboard');
+    const [activeTab, setActiveTab] = useState<'dashboard' | 'submissions' | 'advisor' | 'discoverCurators' | 'campaigns' | 'messages' | 'wallet'>('dashboard');
     const [walletData, setWalletData] = useState<WalletData>(mockArtistWallet);
     const [viewingProfile, setViewingProfile] = useState<CuratorProfileData | null>(null);
     const [isSubModalOpen, setIsSubModalOpen] = useState(false);
     const [conversations, setConversations] = useState<Conversation[]>(() => getConversations('artist'));
     const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+    const [currentFormData, setCurrentFormData] = useState<AllFormData | null>(null);
     
     const handleFormSubmit = async (formData: AllFormData, tool: Tool) => {
         setIsLoading(true);
         setError(null);
         setAnalysis(null);
+        setCurrentFormData(formData);
         try {
             let result;
             switch (tool) {
@@ -220,6 +283,9 @@ export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     break;
                 case 'feedbackSynthesizer':
                     result = await runFeedbackSynthesizer(formData as any);
+                    break;
+                case 'marketAnalysis':
+                    result = await runMarketAnalysis(formData as MarketAnalysisFormData);
                     break;
                 case 'neighborhoods':
                     const neighborhoodFormData: NeighborhoodsFormData = { artist_name: 'Your Artist Name', track_title: 'Your Track Title', genre: 'Your Genre', mood: 'Your Mood' };
@@ -314,6 +380,7 @@ export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         tool={activeTool} 
         onReset={handleResetToDashboard} 
         onCuratorClick={handleViewCuratorProfile}
+        formData={currentFormData as AllFormData}
       />;
     }
 
@@ -336,6 +403,9 @@ export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 <nav className="-mb-px flex space-x-6 overflow-x-auto" aria-label="Tabs">
                      <button onClick={() => setActiveTab('dashboard')} className={`${activeTab === 'dashboard' ? 'border-[var(--accent-primary)] text-[var(--accent-primary)]' : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-secondary)]'} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}>
                         Dashboard
+                    </button>
+                    <button onClick={() => setActiveTab('submissions')} className={`${activeTab === 'submissions' ? 'border-[var(--accent-primary)] text-[var(--accent-primary)]' : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-secondary)]'} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}>
+                        <SendIcon className="w-5 h-5" /> Submissions
                     </button>
                      <button onClick={() => setActiveTab('advisor')} className={`${activeTab === 'advisor' ? 'border-[var(--accent-primary)] text-[var(--accent-primary)]' : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-secondary)]'} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}>
                         <MessageCircleIcon className="w-5 h-5" /> AI Advisor
@@ -361,6 +431,9 @@ export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     onExploreSound={() => handleFormSubmit({} as AllFormData, 'neighborhoods')}
                     onUpgradeClick={() => setIsSubModalOpen(true)}
                 />
+            )}
+            {activeTab === 'submissions' && (
+                <ArtistSubmissions submissions={mockArtistSubmissions} />
             )}
             {activeTab === 'advisor' && (
                 <CareerAdvisor />

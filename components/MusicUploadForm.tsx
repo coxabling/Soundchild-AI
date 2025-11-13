@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import type { Tool, AllFormData, EvaluatorFormData, CuratorFormData, OptimizerFormData, PitchWriterFormData, FollowUpFormData, RemixABTestFormData, FeedbackSynthesizerFormData, LyricAnalyzerFormData } from '../types';
+import type { Tool, AllFormData, EvaluatorFormData, CuratorFormData, OptimizerFormData, PitchWriterFormData, FollowUpFormData, RemixABTestFormData, FeedbackSynthesizerFormData, LyricAnalyzerFormData, MarketAnalysisFormData } from '../types';
 import { getTrackByISRC } from '../services/mockData';
 import { UploadCloudIcon } from './icons';
 import { useNotification } from '../App';
@@ -125,7 +125,8 @@ export const MusicUploadForm: React.FC<MusicUploadFormProps> = ({ activeTool, on
   const [lyricData, setLyricData] = useState<LyricAnalyzerFormData>({ lyrics: '' });
   const [remixData, setRemixData] = useState<RemixABTestFormData>({ track_title: '', target_audience: '', version_a_description: '', version_b_description: '' });
   const [synthesizerData, setSynthesizerData] = useState<FeedbackSynthesizerFormData>({ track_title: '', curator_feedbacks: '[\n  {\n    "curator": "IndieVibes",\n    "feedback": "Love the energy, but the vocals feel a bit buried in the mix."\n  },\n  {\n    "curator": "ChillWave Radio",\n    "feedback": "Great composition! The main synth line is very catchy. Could be a bit shorter for our playlist."\n  }\n]' });
-  
+  const [marketAnalysisData, setMarketAnalysisData] = useState<MarketAnalysisFormData>({ genre: 'Synthwave', location: 'Berlin' });
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
@@ -146,6 +147,7 @@ export const MusicUploadForm: React.FC<MusicUploadFormProps> = ({ activeTool, on
         case 'lyricAnalyzer': formData = lyricData; break;
         case 'remixABTest': formData = remixData; break;
         case 'feedbackSynthesizer': formData = synthesizerData; break;
+        case 'marketAnalysis': formData = marketAnalysisData; break;
         case 'neighborhoods': formData = { artist_name: '', track_title: '', genre: '', mood: '' }; break; // This tool has a simpler trigger
         default: return;
     }
@@ -303,12 +305,20 @@ export const MusicUploadForm: React.FC<MusicUploadFormProps> = ({ activeTool, on
                     </FullWidthField>
                 </FormSection>
             );
+        case 'marketAnalysis':
+            const handleMarketChange = (e: React.ChangeEvent<HTMLInputElement>) => setMarketAnalysisData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+            return (
+                 <FormSection title="Market Details">
+                    <FormInput id="genre" placeholder="Target Genre" value={marketAnalysisData.genre} onChange={handleMarketChange} required />
+                    <FormInput id="location" placeholder="Target Location" value={marketAnalysisData.location} onChange={handleMarketChange} required />
+                </FormSection>
+            );
         default:
             return null;
     }
   }
 
-  const isSimpleForm = ['pitchWriter', 'followUp', 'remixABTest', 'feedbackSynthesizer', 'lyricAnalyzer'].includes(activeTool);
+  const isSimpleForm = ['pitchWriter', 'followUp', 'remixABTest', 'feedbackSynthesizer', 'lyricAnalyzer', 'marketAnalysis'].includes(activeTool);
 
   return (
     <div className="bg-[var(--surface-primary)]/50 p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in">
