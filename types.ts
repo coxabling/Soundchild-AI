@@ -78,6 +78,7 @@ export interface TrackMetadata {
     artist_name: string;
     track_title: string;
     genre: string;
+    mood: string; // Added 'mood' to TrackMetadata
     isrc: string;
 }
 

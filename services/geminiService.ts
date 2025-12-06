@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import type { 
     EvaluatorFormData, EvaluatorResponse, 
@@ -26,6 +25,26 @@ import type {
  */
 const getAiClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
 
+/**
+ * Higher-order function to add retry logic with exponential backoff to any async function.
+ * @param fn The async function to execute.
+ * @param retries The number of retries attempts (default: 3).
+ * @param delay The initial delay in milliseconds before retrying (default: 1000ms).
+ * @returns The result of the async function.
+ * @throws The original error if all retries fail.
+ */
+async function withRetry<T>(fn: () => Promise<T>, retries = 3, delay = 1000): Promise<T> {
+  try {
+    return await fn();
+  } catch (error) {
+    if (retries > 0) {
+      console.warn(`Retrying after error: ${error}. Retries left: ${retries}`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      return withRetry(fn, retries - 1, delay * 2); // Exponential backoff
+    }
+    throw error;
+  }
+}
 
 // --- MODULE 1: ARTIST EVALUATOR ---
 
@@ -544,7 +563,7 @@ export const runPersonaGenerator = async (formData: PersonaGeneratorFormData): P
 // --- TOOL: MARKET ANALYSIS (w/ Google Search) ---
 export const runMarketAnalysis = async (formData: MarketAnalysisFormData): Promise<MarketAnalysisResponse> => {
     const ai = getAiClient();
-    try {
+    const callFn = async () => { // Wrap the actual call in an async function for retry
         const response: GenerateContentResponse = await ai.models.generateContent({
             model: 'gemini-2.5-pro',
             contents: `You are a market analyst for the music industry. Analyze the market for ${formData.genre} in ${formData.location}. Synthesize information on key radio stations, popular venues, competing local artists, and current online discussion. Structure your response in markdown with the following sections: '### Market Overview', '### Key Opportunities', '### Potential Risks', and '### Relevant Media & Venues'.`,
@@ -561,9 +580,12 @@ export const runMarketAnalysis = async (formData: MarketAnalysisFormData): Promi
             .map(web => ({ uri: web.uri, title: web.title || 'Untitled Source' }));
 
         return { analysis_text, sources };
+    };
 
+    try {
+        return await withRetry(callFn); // Apply retry
     } catch (error) {
-        console.error("Error calling Gemini API for market analysis:", error);
+        console.error("Error calling Gemini API for market analysis after retries:", error);
         throw error;
     }
 };
@@ -599,7 +621,7 @@ export const runDealMemo = async (formData: DealMemoFormData): Promise<DealMemoR
 
 async function callGemini<T>(prompt: string, schema: object): Promise<T> {
     const ai = getAiClient();
-    try {
+    const callFn = async () => { // Wrap the actual call in an async function for retry
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-pro',
             contents: prompt,
@@ -611,14 +633,23 @@ async function callGemini<T>(prompt: string, schema: object): Promise<T> {
         });
 
         const jsonText = response.text.trim();
-        const parsedData = JSON.parse(jsonText);
-        return parsedData as T;
-
-    } catch (error) {
-        console.error("Error calling Gemini API:", error);
-        if (error instanceof SyntaxError) {
-            console.error("Failed to parse JSON response from API.");
+        // Validate if the response is empty when JSON is expected
+        if (!jsonText) {
+            throw new SyntaxError("API returned an empty response where JSON was expected.");
         }
+        try {
+            const parsedData = JSON.parse(jsonText);
+            return parsedData as T;
+        } catch (parseError: any) {
+            console.error("Failed to parse JSON response from API:", jsonText, parseError);
+            throw new SyntaxError(`Failed to parse JSON response: ${parseError.message}. Response: ${jsonText.substring(0, 200)}...`);
+        }
+    };
+
+    try {
+        return await withRetry(callFn); // Apply retry
+    } catch (error) {
+        console.error("Error calling Gemini API after retries:", error);
         throw error;
     }
 }

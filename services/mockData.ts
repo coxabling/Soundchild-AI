@@ -1,3 +1,4 @@
+
 import type { ArtistProfileData, CuratorProfileData, CampaignPerformanceData, SubscriptionPlan, Conversation, Badge, CreditPack, TrackMetadata, SoundNeighborhood, CuratorListData } from '../types';
 
 export const mockCreditPacks: CreditPack[] = [
@@ -12,6 +13,7 @@ export const getTrackByISRC = (isrc: string): TrackMetadata | null => {
             artist_name: 'Luna Bloom',
             track_title: 'Neon Tides',
             genre: 'Synthwave',
+            mood: 'Nostalgic', // Added 'mood'
             isrc: 'US-S1Z-23-00001'
         };
     }
