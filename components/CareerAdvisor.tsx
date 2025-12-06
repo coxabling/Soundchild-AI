@@ -96,7 +96,7 @@ export const CareerAdvisor: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col h-[70vh] bg-[var(--surface-primary)]/40 rounded-lg border border-[var(--border)] overflow-hidden animate-fade-in">
+        <div className="flex flex-col h-[70vh] bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] overflow-hidden animate-fade-in">
             <div className="p-4 border-b border-[var(--border)] flex items-center gap-3">
                  <SparklesIcon className="w-6 h-6 text-[var(--accent-primary)]"/>
                  <div>

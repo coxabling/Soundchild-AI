@@ -12,7 +12,7 @@ export const Header: React.FC<HeaderProps> = ({ view, onNavigate }) => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="bg-[var(--surface-primary)]/70 backdrop-blur-sm border-b border-[var(--border)] sticky top-0 z-20">
+    <header className="bg-[var(--surface-primary)] border-b border-[var(--border)] sticky top-0 z-20">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <button onClick={() => onNavigate('landing')} className="flex items-center gap-3">
             <SoundwaveIcon className="w-8 h-8 text-[var(--accent-primary)]" />

@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { getSoundNeighborhoods } from '../services/mockData';
 import type { SoundNeighborhood } from '../types';
 import { MusicNoteIcon, TelescopeIcon } from './icons';
 
 const NeighborhoodCard: React.FC<{ neighborhood: SoundNeighborhood }> = ({ neighborhood }) => (
-    <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg overflow-hidden group">
+    <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg overflow-hidden group">
         <div className="relative h-48">
             <img src={neighborhood.coverArtUrl} alt={neighborhood.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-primary)] via-[var(--surface-primary)]/70 to-transparent" />

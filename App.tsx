@@ -71,7 +71,7 @@ const ThemeProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
 }
 
 const HubSelector: React.FC<{ onSelect: (hub: Hub) => void }> = ({ onSelect }) => (
-    <div className="bg-[var(--surface-primary)]/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] text-center animate-fade-in">
+    <div className="bg-[var(--surface-primary)] backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] text-center animate-fade-in">
         <h2 className="text-4xl font-extrabold text-[var(--text-primary)] mb-2">Welcome to Soundchild.ai</h2>
         <p className="text-lg text-[var(--accent-primary)] mb-8">Select your role to get started.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

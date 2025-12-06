@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BarChartIcon, MusicNoteIcon, TelescopeIcon, UserCheckIcon, BriefcaseIcon } from './icons';
 
@@ -7,7 +8,7 @@ interface LandingPageProps {
 }
 
 const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; description: string; }> = ({ icon, title, description }) => (
-    <div className="bg-[var(--surface-primary)]/50 p-6 rounded-lg border border-[var(--border)] text-left">
+    <div className="bg-[var(--surface-primary)] p-6 rounded-lg border border-[var(--border)] text-left">
         <div className="flex items-center gap-4 mb-3">
             {icon}
             <h3 className="text-xl font-bold text-[var(--text-primary)]">{title}</h3>
@@ -76,14 +77,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLaunchApp, onDiscove
                      <p className="mt-4 text-lg text-[var(--text-secondary)]">Our core AI modules work together to create a smarter music economy.</p>
                 </div>
                  <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div className="bg-[var(--surface-primary)]/50 p-6 rounded-lg border border-[var(--border)] flex items-center gap-4">
+                     <div className="bg-[var(--surface-primary)] p-6 rounded-lg border border-[var(--border)] flex items-center gap-4">
                         <TelescopeIcon className="w-10 h-10 text-[var(--accent-primary)] flex-shrink-0"/>
                         <div>
                             <h4 className="font-bold text-[var(--text-primary)]">AI Music Intelligence</h4>
                             <p className="text-sm text-[var(--text-secondary)]">Gemini models auto-analyze songs for quality, mood, and audience match.</p>
                         </div>
                      </div>
-                      <div className="bg-[var(--surface-primary)]/50 p-6 rounded-lg border border-[var(--border)] flex items-center gap-4">
+                      <div className="bg-[var(--surface-primary)] p-6 rounded-lg border border-[var(--border)] flex items-center gap-4">
                         <BarChartIcon className="w-10 h-10 text-[var(--accent-primary)] flex-shrink-0"/>
                         <div>
                             <h4 className="font-bold text-[var(--text-primary)]">Verified Impact Engine</h4>

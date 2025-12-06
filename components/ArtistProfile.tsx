@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { ArtistProfileData } from '../types';
 import { InstagramIcon, MessageSquareIcon, MusicNoteIcon, SpotifyIcon, TwitterIcon, XIcon, ShareIcon } from './icons';
@@ -32,7 +33,7 @@ export const ArtistProfile: React.FC<ArtistProfileProps> = ({ profile, onClose, 
                     <XIcon className="w-8 h-8" />
                 </button>
 
-                <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden">
+                <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden">
                     {/* Header */}
                     <div className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 border-b border-[var(--border)]">
                         <img src={profile.imageUrl} alt={profile.name} className="w-32 h-32 rounded-full border-4 border-[var(--border-secondary)] object-cover" />
@@ -77,7 +78,7 @@ export const ArtistProfile: React.FC<ArtistProfileProps> = ({ profile, onClose, 
                             <h3 className="text-xl font-bold text-[var(--accent-primary-hover)] mb-4">Top Tracks</h3>
                             <div className="space-y-3">
                                 {profile.topTracks.map((track, index) => (
-                                    <div key={track.title} className="flex items-center p-3 bg-[var(--surface-secondary)]/50 rounded-lg">
+                                    <div key={track.title} className="flex items-center p-3 bg-[var(--surface-secondary)] rounded-lg">
                                         <div className="flex items-center gap-4 flex-grow">
                                             <span className="text-[var(--text-secondary)] font-bold">{index + 1}</span>
                                             <MusicNoteIcon className="w-5 h-5 text-[var(--accent-primary)]" />

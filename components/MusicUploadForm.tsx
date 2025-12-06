@@ -321,7 +321,7 @@ export const MusicUploadForm: React.FC<MusicUploadFormProps> = ({ activeTool, on
   const isSimpleForm = ['pitchWriter', 'followUp', 'remixABTest', 'feedbackSynthesizer', 'lyricAnalyzer', 'marketAnalysis'].includes(activeTool);
 
   return (
-    <div className="bg-[var(--surface-primary)]/50 p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in">
+    <div className="bg-[var(--surface-primary)] p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in">
       <h2 className="text-3xl font-bold text-[var(--accent-primary)] mb-2">{toolConfig[activeTool].title}</h2>
       <p className="text-[var(--text-secondary)] mb-8">{toolConfig[activeTool].description}</p>
       

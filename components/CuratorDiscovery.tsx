@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { getCuratorListData } from '../services/mockData';
 import type { CuratorListData } from '../types';
@@ -8,7 +9,7 @@ interface CuratorDiscoveryProps {
 }
 
 const CuratorCard: React.FC<{ curator: CuratorListData; onViewProfile: () => void; }> = ({ curator, onViewProfile }) => (
-    <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg p-4 flex flex-col justify-between hover:border-[var(--accent-primary)] transition-colors">
+    <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 flex flex-col justify-between hover:border-[var(--accent-primary)] transition-colors">
         <div>
             <div className="flex items-start gap-4">
                 <img src={curator.imageUrl} alt={curator.name} className="w-16 h-16 rounded-md object-cover flex-shrink-0" />
@@ -60,7 +61,7 @@ export const CuratorDiscovery: React.FC<CuratorDiscoveryProps> = ({ onViewProfil
             </div>
             
             {/* Filters */}
-            <div className="p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)] grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="relative col-span-full md:col-span-1">
                     <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-tertiary)]" />
                     <input

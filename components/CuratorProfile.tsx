@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { CuratorProfileData } from '../types';
 import { AwardIcon, LinkIcon, MessageSquareIcon, ShareIcon, ShieldCheckIcon, StarIcon, TelescopeIcon, UserCheckIcon, XIcon } from './icons';
@@ -10,14 +11,14 @@ interface CuratorProfileProps {
 }
 
 const StatPill: React.FC<{ label: string; value: string | number; unit?: string; color?: string }> = ({ label, value, unit, color = 'text-[var(--text-primary)]' }) => (
-    <div className="text-center p-3 bg-[var(--surface-secondary)]/50 rounded-lg">
+    <div className="text-center p-3 bg-[var(--surface-secondary)] rounded-lg">
         <p className={`text-3xl font-bold ${color}`}>{value}<span className="text-xl">{unit}</span></p>
         <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">{label}</p>
     </div>
 );
 
 const BadgeDisplay: React.FC<{ badge: { name: string, description: string } }> = ({ badge }) => (
-    <div className="group relative text-center p-3 bg-[var(--surface-secondary)]/50 rounded-lg flex flex-col items-center justify-center">
+    <div className="group relative text-center p-3 bg-[var(--surface-secondary)] rounded-lg flex flex-col items-center justify-center">
         <AwardIcon className="w-8 h-8 text-[var(--warning)] mb-2" />
         <p className="text-sm font-semibold text-[var(--text-primary)]">{badge.name}</p>
         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-[var(--background-secondary)] border border-[var(--border)] text-[var(--text-secondary)] text-xs rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
@@ -42,7 +43,7 @@ export const CuratorProfile: React.FC<CuratorProfileProps> = ({ profile, onClose
                 <button onClick={onClose} className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors z-40">
                     <XIcon className="w-8 h-8" />
                 </button>
-                <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden">
+                <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden">
                     {/* Header */}
                     <div className="p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 border-b border-[var(--border)]">
                         <img src={profile.imageUrl} alt={profile.name} className="w-32 h-32 rounded-full border-4 border-[var(--border-secondary)] object-cover" />
@@ -117,7 +118,7 @@ export const CuratorProfile: React.FC<CuratorProfileProps> = ({ profile, onClose
                             </h3>
                             <div className="space-y-3">
                                 {profile.verifiedPlaylists.map(playlist => (
-                                    <a href={playlist.url} target="_blank" rel="noopener noreferrer" key={playlist.name} className="flex items-center justify-between p-3 bg-[var(--surface-secondary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg transition-colors group">
+                                    <a href={playlist.url} target="_blank" rel="noopener noreferrer" key={playlist.name} className="flex items-center justify-between p-3 bg-[var(--surface-secondary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg transition-colors group">
                                         <div>
                                             <p className="font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">{playlist.name}</p>
                                             <p className="text-sm text-[var(--text-secondary)]">{playlist.followers.toLocaleString()} followers</p>
@@ -134,7 +135,7 @@ export const CuratorProfile: React.FC<CuratorProfileProps> = ({ profile, onClose
                             <h3 className="text-xl font-bold text-[var(--accent-primary-hover)] mb-4">Recent Feedback</h3>
                             <div className="space-y-4">
                                 {profile.recentReviews.map((review, index) => (
-                                    <div key={index} className="p-4 bg-[var(--surface-secondary)]/50 rounded-lg border-l-4 border-[var(--accent-primary)]">
+                                    <div key={index} className="p-4 bg-[var(--surface-secondary)] rounded-lg border-l-4 border-[var(--accent-primary)]">
                                         <div className="flex justify-between items-start">
                                             <p className="text-[var(--text-secondary)] italic flex-grow pr-4">"{review.snippet}"</p>
                                             <div className="group relative flex-shrink-0">

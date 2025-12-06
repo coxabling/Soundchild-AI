@@ -100,14 +100,14 @@ const PurchaseCreditsModal: React.FC<{
                         <div>
                             <p className="text-sm font-medium text-[var(--text-secondary)] mb-2">Select Payment Method:</p>
                             <div className="space-y-3">
-                                <button onClick={() => setPaymentMethod('stripe')} className={`w-full text-left p-3 flex items-center gap-4 rounded-lg border-2 transition-colors ${paymentMethod === 'stripe' ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10' : 'border-[var(--border-secondary)] bg-[var(--surface-secondary)]/50 hover:border-[var(--border-secondary)]/80'}`}>
+                                <button onClick={() => setPaymentMethod('stripe')} className={`w-full text-left p-3 flex items-center gap-4 rounded-lg border-2 transition-colors ${paymentMethod === 'stripe' ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10' : 'border-[var(--border-secondary)] bg-[var(--surface-secondary)] hover:border-[var(--border-secondary)]/80'}`}>
                                     <StripeIcon className="w-10 h-10 flex-shrink-0" />
                                     <div>
                                         <p className="font-bold text-[var(--text-primary)]">Pay with Card</p>
                                         <p className="text-xs text-[var(--text-secondary)]">Powered by Stripe</p>
                                     </div>
                                 </button>
-                                <button onClick={() => setPaymentMethod('paypal')} className={`w-full text-left p-3 flex items-center gap-4 rounded-lg border-2 transition-colors ${paymentMethod === 'paypal' ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10' : 'border-[var(--border-secondary)] bg-[var(--surface-secondary)]/50 hover:border-[var(--border-secondary)]/80'}`}>
+                                <button onClick={() => setPaymentMethod('paypal')} className={`w-full text-left p-3 flex items-center gap-4 rounded-lg border-2 transition-colors ${paymentMethod === 'paypal' ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10' : 'border-[var(--border-secondary)] bg-[var(--surface-secondary)] hover:border-[var(--border-secondary)]/80'}`}>
                                     <PayPalIcon className="w-10 h-10 flex-shrink-0" />
                                     <div>
                                         <p className="font-bold text-[var(--text-primary)]">Pay with PayPal</p>
@@ -231,12 +231,12 @@ export const Wallet: React.FC<WalletProps> = ({ walletData, setWalletData, userT
             {modal === 'withdraw_crypto' && <WithdrawModal onAction={handleWithdraw} onClose={() => setModal('closed')} method="Crypto" />}
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                 <div className="text-center p-6 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)]">
+                 <div className="text-center p-6 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)]">
                     <p className="text-[var(--text-secondary)] text-sm">Cash Balance</p>
                     <p className="text-5xl font-bold text-[var(--positive)]">${walletData.balance.toFixed(2)}</p>
                 </div>
                  {userType === 'artist' && (
-                     <div className="text-center p-6 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)]">
+                     <div className="text-center p-6 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)]">
                         <p className="text-[var(--text-secondary)] text-sm">Submission Credits</p>
                         <p className="text-5xl font-bold text-[var(--accent-primary)] flex items-center justify-center gap-2">
                             <CoinsIcon className="w-10 h-10" />
@@ -253,14 +253,14 @@ export const Wallet: React.FC<WalletProps> = ({ walletData, setWalletData, userT
             ) : (
                 <div className="space-y-3">
                      <h4 className="text-lg font-semibold text-[var(--accent-primary-hover)]">Payout Methods</h4>
-                     <button onClick={() => setModal('withdraw_bank')} className="w-full text-left p-4 flex items-center gap-4 bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-colors">
+                     <button onClick={() => setModal('withdraw_bank')} className="w-full text-left p-4 flex items-center gap-4 bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-colors">
                         <CreditCardIcon className="w-8 h-8 text-[var(--accent-primary)]"/>
                         <div>
                             <p className="font-bold text-[var(--text-primary)]">Bank Transfer</p>
                             <p className="text-sm text-[var(--text-secondary)]">3-5 business days</p>
                         </div>
                     </button>
-                    <button onClick={() => setModal('withdraw_crypto')} className="w-full text-left p-4 flex items-center gap-4 bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-colors">
+                    <button onClick={() => setModal('withdraw_crypto')} className="w-full text-left p-4 flex items-center gap-4 bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-colors">
                         <CoinbaseIcon className="w-8 h-8 text-[var(--accent-primary)]"/>
                         <div>
                             <p className="font-bold text-[var(--text-primary)]">Withdraw via Crypto</p>

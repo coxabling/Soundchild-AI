@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 // FIX: Import 'AllFormData' type from '../types' to resolve 'Cannot find name' error.
 import type { AllAnalysisResponses, Tool, EvaluatorResponse, CuratorResponse, OptimizerResponse, PitchWriterResponse, FollowUpResponse, NeighborhoodsResponse, Submission, RemixABTestResponse, FeedbackSynthesizerResponse, LyricAnalyzerResponse, MarketAnalysisResponse, MarketAnalysisFormData, AllFormData } from '../types';
@@ -35,7 +36,7 @@ const getAIEngineInfo = (tool: Tool): string => {
 
 
 const AnalysisCard: React.FC<{ title: string; icon: React.ReactNode; children: React.ReactNode; className?: string }> = ({ title, icon, children, className }) => (
-  <div className={`bg-[var(--surface-primary)]/50 backdrop-blur-sm border border-[var(--border)] rounded-xl shadow-lg overflow-hidden ${className}`}>
+  <div className={`bg-[var(--surface-primary)] border border-[var(--border)] rounded-xl shadow-lg overflow-hidden ${className}`}>
     <div className="p-5 bg-[var(--surface-primary)]/80 flex items-center gap-4 border-b border-[var(--border)]">
       {icon}
       <h3 className="text-xl font-bold text-[var(--accent-primary)]">{title}</h3>
@@ -72,7 +73,7 @@ const getScoreColor = (score: number) => score >= 75 ? 'text-[var(--positive)]' 
 
 const ArtistEvaluatorReport: React.FC<{data: EvaluatorResponse}> = ({ data }) => (
     <div className="space-y-8">
-        <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-xl shadow-lg p-6 text-center">
+        <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-xl shadow-lg p-6 text-center">
             <ScoreCircle score={data.readiness_score} label="Readiness" colorClass={getScoreColor(data.readiness_score)} />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -199,12 +200,12 @@ const CuratorAssistantReport: React.FC<{
     return (
         <div className="space-y-8">
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-xl shadow-lg p-6 text-center flex flex-col justify-center items-center">
+                <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-xl shadow-lg p-6 text-center flex flex-col justify-center items-center">
                      <p className="text-lg text-[var(--text-secondary)] mb-2">Recommended Decision</p>
                     <p className={`text-5xl font-bold capitalize ${decisionColor}`}>{data.decision}</p>
                     {data.decision === 'accept' && renderSyncButton()}
                 </div>
-                <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-xl shadow-lg p-6 text-center">
+                <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-xl shadow-lg p-6 text-center">
                     <ScoreCircle score={data.fit_score} label="Fit Score" colorClass={getScoreColor(data.fit_score)} />
                 </div>
             </div>
@@ -386,7 +387,7 @@ const RemixABTestReport: React.FC<{data: RemixABTestResponse}> = ({ data }) => {
     const winnerColor = data.predicted_winner === 'Version A' ? 'text-[var(--positive)]' : data.predicted_winner === 'Version B' ? 'text-[var(--accent-primary)]' : 'text-[var(--warning)]';
     return (
         <div className="space-y-8">
-            <div className="text-center p-6 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)]">
+            <div className="text-center p-6 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)]">
                 <p className="text-[var(--text-secondary)] text-sm">Predicted Winner</p>
                 <p className={`text-5xl font-bold ${winnerColor}`}>{data.predicted_winner}</p>
                 <p className="text-[var(--text-primary)]/90 mt-2 italic">"{data.winner_reasoning}"</p>
@@ -460,12 +461,12 @@ const MarketAnalysisReport: React.FC<{
             
             <div className="space-y-6">
                 {sections.length > 0 ? sections.map(section => (
-                    <div key={section.title} className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg p-5">
+                    <div key={section.title} className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5">
                          <h4 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-3">{section.title}</h4>
                          {renderContent(section.content)}
                     </div>
                 )) : (
-                    <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg p-5">
+                    <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5">
                         <h4 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-3">Analysis</h4>
                         {renderContent(analysis.analysis_text)}
                     </div>
@@ -473,7 +474,7 @@ const MarketAnalysisReport: React.FC<{
             </div>
 
             {analysis.sources.length > 0 && (
-                <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg p-5">
+                <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-5">
                     <h4 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-3">Data Sources from Google Search</h4>
                     <ul className="space-y-2">
                         {analysis.sources.map((source, i) => (

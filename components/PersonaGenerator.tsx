@@ -47,7 +47,7 @@ export const PersonaGenerator: React.FC = () => {
             </div>
             
             {!result && (
-                <div className="text-center p-8 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)]">
+                <div className="text-center p-8 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)]">
                     <button onClick={handleGenerate} disabled={isLoading} className="inline-flex items-center gap-3 px-8 py-3 bg-[var(--accent-secondary)] hover:bg-[var(--accent-secondary-hover)] text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg disabled:opacity-50">
                          {isLoading ? <><LoadingSpinner/> Generating...</> : <><SparklesIcon className="w-6 h-6"/> Generate My Audience Personas</>}
                     </button>
@@ -57,7 +57,7 @@ export const PersonaGenerator: React.FC = () => {
             {result && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
                     {result.personas.map((persona, index) => (
-                        <div key={index} className="bg-[var(--surface-primary)]/50 p-6 rounded-lg border border-[var(--border)] space-y-4">
+                        <div key={index} className="bg-[var(--surface-primary)] p-6 rounded-lg border border-[var(--border)] space-y-4">
                             <h4 className="text-xl font-bold text-[var(--accent-primary)]">{persona.name}</h4>
                             <div>
                                 <h5 className="font-semibold text-[var(--text-primary)] text-sm mb-1">Demographics</h5>

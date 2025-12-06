@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { mockSubscriptionPlans } from '../services/mockData';
 import type { SubscriptionPlan } from '../types';
@@ -12,7 +13,7 @@ const PlanCard: React.FC<{ plan: SubscriptionPlan }> = ({ plan }) => (
         p-6 rounded-xl border-2 w-full
         ${plan.isFeatured 
             ? 'bg-[var(--accent-secondary)]/20 border-[var(--accent-primary)]' 
-            : 'bg-[var(--surface-primary)]/50 border-[var(--border)]'}
+            : 'bg-[var(--surface-primary)] border-[var(--border)]'}
     `}>
         <div className="text-center">
             <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2 flex items-center justify-center gap-2">

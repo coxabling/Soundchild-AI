@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import type { Conversation, Message } from '../types';
 import { InboxIcon, SendIcon } from './icons';
@@ -97,7 +98,7 @@ export const Messaging: React.FC<MessagingProps> = ({
     };
 
     return (
-        <div className="flex flex-col md:flex-row h-[70vh] bg-[var(--surface-primary)]/40 rounded-lg border border-[var(--border)] overflow-hidden">
+        <div className="flex flex-col md:flex-row h-[70vh] bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] overflow-hidden">
             <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-[var(--border)] flex flex-col">
                 <div className="p-4 border-b border-[var(--border)]">
                     <h3 className="text-xl font-bold text-[var(--text-primary)]">Inbox</h3>
@@ -123,7 +124,7 @@ export const Messaging: React.FC<MessagingProps> = ({
             </div>
 
             {/* Active Conversation */}
-            <div className="w-full md:w-2/3 flex flex-col bg-[var(--background-secondary)]/30">
+            <div className="w-full md:w-2/3 flex flex-col bg-[var(--background-secondary)]">
                 {activeConversation ? (
                     <>
                         <div className="p-4 border-b border-[var(--border)] flex items-center gap-3">

@@ -132,16 +132,16 @@ const CuratorEarningsDisplay: React.FC<{
 }> = ({ earnings, walletData, setWalletData }) => (
     <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-             <div className="p-6 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)]">
+             <div className="p-6 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)]">
                 <h4 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-4">FairPay™ Breakdown</h4>
                 <EarningsChart breakdown={earnings.breakdown} />
             </div>
             <div className="grid grid-cols-2 gap-6">
-                <div className="text-center p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)] flex flex-col justify-center">
+                <div className="text-center p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] flex flex-col justify-center">
                     <p className="text-[var(--text-secondary)] text-sm">Reputation</p>
                     <p className={`text-5xl font-bold ${getScoreColor(earnings.reputationScore)}`}>{earnings.reputationScore}<span className="text-3xl">%</span></p>
                 </div>
-                <div className="text-center p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)] flex flex-col justify-center">
+                <div className="text-center p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] flex flex-col justify-center">
                     <p className="text-[var(--text-secondary)] text-sm">Streak Bonus</p>
                     <p className="text-5xl font-bold text-[var(--accent-primary)]">{earnings.streakBonus}x</p>
                 </div>
@@ -288,7 +288,7 @@ export const CuratorHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         return (
             <div>
                  {isLoading && (
-                    <div className="text-center bg-[var(--surface-primary)]/50 backdrop-blur-sm p-8 rounded-2xl border border-[var(--border)]">
+                    <div className="text-center bg-[var(--surface-primary)] backdrop-blur-sm p-8 rounded-2xl border border-[var(--border)]">
                         <div className="flex justify-center items-center mb-4"><LoadingSpinner /></div>
                         <p className="text-lg text-[var(--accent-primary)] animate-pulse">AI Assistant is reviewing...</p>
                     </div>
@@ -316,7 +316,7 @@ export const CuratorHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     }
     
     return (
-        <div className="bg-[var(--surface-primary)]/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in">
+        <div className="bg-[var(--surface-primary)] backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in">
             {preAnalysisSubmission && <PreAnalysisModal submission={preAnalysisSubmission} onContinue={handleStartFullReview} onCancel={() => setPreAnalysisSubmission(null)}/>}
             <div className="flex justify-between items-start mb-6">
                 <div>
@@ -350,7 +350,7 @@ export const CuratorHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                  submissions.length > 0 ? (
                     <div className="space-y-4">
                         {submissions.map(sub => (
-                            <div key={sub.id} className="w-full text-left p-4 bg-[var(--surface-secondary)]/30 rounded-lg border border-[var(--border)] flex items-center justify-between gap-4">
+                            <div key={sub.id} className="w-full text-left p-4 bg-[var(--surface-secondary)] rounded-lg border border-[var(--border)] flex items-center justify-between gap-4">
                                 <div className="flex items-center gap-4 flex-grow">
                                     <div className={`w-3 h-3 rounded-full flex-shrink-0 ${sub.status === 'pending' ? 'bg-[var(--accent-primary)] animate-pulse' : 'bg-[var(--surface-tertiary)]'}`}></div>
                                     <div>

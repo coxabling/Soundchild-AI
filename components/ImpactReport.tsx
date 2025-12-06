@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { CampaignPerformanceData } from '../types';
 import { BarChartIcon, CheckCircleIcon, SparklesIcon, XIcon } from './icons';
@@ -8,7 +9,7 @@ interface ImpactReportProps {
 }
 
 const StatCard: React.FC<{ label: string; value: string; icon: React.ReactNode; }> = ({ label, value, icon }) => (
-    <div className="bg-[var(--surface-secondary)]/50 p-4 rounded-lg text-center border border-[var(--border-secondary)]">
+    <div className="bg-[var(--surface-secondary)] p-4 rounded-lg text-center border border-[var(--border-secondary)]">
         <div className="flex justify-center items-center text-[var(--accent-primary)] mb-2">{icon}</div>
         <p className="text-3xl font-bold text-[var(--text-primary)]">{value}</p>
         <p className="text-sm text-[var(--text-secondary)] mt-1">{label}</p>
@@ -44,7 +45,7 @@ export const ImpactReport: React.FC<ImpactReportProps> = ({ report, onClose }) =
                         <h3 className="text-xl font-bold text-[var(--accent-primary-hover)] mb-4 flex items-center gap-2">
                            <SparklesIcon className="w-5 h-5"/> AI Insight
                         </h3>
-                        <div className="p-4 bg-[var(--surface-secondary)]/50 rounded-lg border-l-4 border-[var(--accent-primary)]">
+                        <div className="p-4 bg-[var(--surface-secondary)] rounded-lg border-l-4 border-[var(--accent-primary)]">
                             <p className="text-[var(--text-secondary)]">
                                 This placement performed <strong className="text-[var(--positive)]">above average</strong> for tracks in this genre. 
                                 The high save rate indicates strong listener engagement. Consider re-pitching to {report.curatorName} for your next release.

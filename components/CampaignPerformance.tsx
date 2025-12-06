@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import type { Submission, CampaignPerformanceData } from '../types';
 import { getPerformanceReport } from '../services/mockData';
@@ -34,7 +35,7 @@ export const CampaignPerformance: React.FC = () => {
             </div>
             <div className="space-y-4">
                 {campaigns.map(campaign => (
-                    <div key={campaign.id} className="w-full text-left p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div key={campaign.id} className="w-full text-left p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div className="flex-grow">
                             <p className="font-bold text-lg text-[var(--text-primary)]">{campaign.track_title}</p>
                             <p className="text-sm text-[var(--text-secondary)]">{campaign.artist_name} - <span className="font-medium text-[var(--text-primary)]/80">{campaign.genre}</span></p>

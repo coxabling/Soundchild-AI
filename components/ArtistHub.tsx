@@ -47,7 +47,7 @@ const mockArtistWallet: WalletData = {
 }
 
 const AnalyticsCard: React.FC<{ value: string | number; label: string; unit?: string }> = ({ value, label, unit }) => (
-    <div className="bg-[var(--surface-primary)]/50 p-4 rounded-lg text-center border border-[var(--border)]">
+    <div className="bg-[var(--surface-primary)] p-4 rounded-lg text-center border border-[var(--border)]">
         <p className="text-4xl font-bold text-[var(--accent-primary)]">{value}<span className="text-2xl">{unit}</span></p>
         <p className="text-sm text-[var(--text-secondary)] mt-1">{label}</p>
     </div>
@@ -61,7 +61,7 @@ const AnalyticsChart: React.FC<{ data: ArtistAnalytics }> = ({ data }) => {
     ];
 
     return (
-        <div className="bg-[var(--surface-primary)]/50 p-4 rounded-lg border border-[var(--border)] flex justify-around items-end h-40">
+        <div className="bg-[var(--surface-primary)] p-4 rounded-lg border border-[var(--border)] flex justify-around items-end h-40">
             {chartData.map(item => (
                 <div key={item.label} className="text-center w-1/4 flex flex-col items-center justify-end h-full">
                     <div className="w-8 bg-[var(--surface-secondary)] rounded-t-md flex-grow flex items-end">
@@ -116,7 +116,7 @@ const ArtistDashboard: React.FC<{
             {isSpotifyConnected ? (
                 <SpotifyAnalyticsDisplay />
             ) : (
-                <div className="bg-[var(--surface-primary)]/50 p-6 rounded-lg border border-[var(--border)] text-center">
+                <div className="bg-[var(--surface-primary)] p-6 rounded-lg border border-[var(--border)] text-center">
                     <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Connect Your Spotify Account</h3>
                     <p className="text-[var(--text-secondary)] mb-6 max-w-md mx-auto">Integrate with Spotify for Artists to see detailed analytics and unlock powerful features for your release campaigns.</p>
                     <button 
@@ -132,35 +132,35 @@ const ArtistDashboard: React.FC<{
             <div>
                  <h3 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-4">AI Toolkit</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <button onClick={() => onToolSelect('evaluator')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                    <button onClick={() => onToolSelect('evaluator')} className="group p-4 text-center bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
                         <MusicNoteIcon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">Evaluate Track</h4>
                     </button>
-                     <button onClick={() => onToolSelect('pitchWriter')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                     <button onClick={() => onToolSelect('pitchWriter')} className="group p-4 text-center bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
                         <SendIcon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">AI Pitch Writer</h4>
                     </button>
-                    <button onClick={() => onToolSelect('optimizer')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                    <button onClick={() => onToolSelect('optimizer')} className="group p-4 text-center bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
                         <BarChartIcon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">Optimize Campaign</h4>
                     </button>
-                    <button onClick={() => onToolSelect('followUp')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                    <button onClick={() => onToolSelect('followUp')} className="group p-4 text-center bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
                         <MessageSquareIcon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">Smart Follow-Up</h4>
                     </button>
-                     <button onClick={() => onToolSelect('lyricAnalyzer')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                     <button onClick={() => onToolSelect('lyricAnalyzer')} className="group p-4 text-center bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
                         <PenSquareIcon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">Lyric Analyzer</h4>
                     </button>
-                    <button onClick={() => onToolSelect('remixABTest')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                    <button onClick={() => onToolSelect('remixABTest')} className="group p-4 text-center bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
                         <GitCompareArrowsIcon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">A/B Test Remix</h4>
                     </button>
-                     <button onClick={() => onToolSelect('feedbackSynthesizer')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                     <button onClick={() => onToolSelect('feedbackSynthesizer')} className="group p-4 text-center bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
                         <ClipboardListIcon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">AI Report Card</h4>
                     </button>
-                    <button onClick={() => onToolSelect('marketAnalysis')} className="group p-4 text-center bg-[var(--surface-primary)]/50 hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
+                    <button onClick={() => onToolSelect('marketAnalysis')} className="group p-4 text-center bg-[var(--surface-primary)] hover:bg-[var(--surface-secondary)]/80 rounded-lg border border-[var(--border)] hover:border-[var(--accent-primary)] transition-all transform hover:-translate-y-1">
                         <Globe2Icon className="w-8 h-8 text-[var(--text-secondary)] group-hover:text-[var(--accent-primary)] mx-auto mb-3 transition-colors" />
                         <h4 className="font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">Market Analysis</h4>
                     </button>
@@ -168,7 +168,7 @@ const ArtistDashboard: React.FC<{
             </div>
              <div>
                 <h3 className="text-lg font-semibold text-[var(--accent-primary-hover)] mb-4">Discovery Zone</h3>
-                 <div className="bg-[var(--surface-primary)]/50 p-6 rounded-lg border border-[var(--border)] text-center">
+                 <div className="bg-[var(--surface-primary)] p-6 rounded-lg border border-[var(--border)] text-center">
                     <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3">Find Your Sound Neighborhood</h3>
                     <p className="text-[var(--text-secondary)] mb-6 max-w-md mx-auto">Discover similar artists and the curators who support them to find your place in the ecosystem.</p>
                     <button 
@@ -218,7 +218,7 @@ const ArtistSubmissions: React.FC<{ submissions: Submission[] }> = ({ submission
             </div>
             <div className="space-y-3">
                 {submissions.map(sub => (
-                    <div key={sub.id} className="p-4 bg-[var(--surface-secondary)]/30 rounded-lg border border-[var(--border)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div key={sub.id} className="p-4 bg-[var(--surface-secondary)] rounded-lg border border-[var(--border)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div className="flex-grow">
                             <p className="font-bold text-lg text-[var(--text-primary)]">{sub.track_title}</p>
                             <p className="text-sm text-[var(--text-secondary)]">
@@ -349,7 +349,7 @@ export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
     if (isLoading) {
       return (
-        <div className="text-center bg-[var(--surface-primary)]/50 backdrop-blur-sm p-8 rounded-2xl border border-[var(--border)]">
+        <div className="text-center bg-[var(--surface-primary)] backdrop-blur-sm p-8 rounded-2xl border border-[var(--border)]">
            <div className="flex justify-center items-center mb-4">
               <LoadingSpinner />
             </div>
@@ -389,7 +389,7 @@ export const ArtistHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     }
 
     return (
-        <div className="bg-[var(--surface-primary)]/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in">
+        <div className="bg-[var(--surface-primary)] backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in">
             {isSubModalOpen && <SubscriptionModal onClose={() => setIsSubModalOpen(false)} />}
             <div className="flex justify-between items-start mb-6">
                 <div>

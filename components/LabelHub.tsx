@@ -43,7 +43,7 @@ const ArtistCard: React.FC<{ artist: UnsignedArtist, onViewProfile: (name: strin
     };
 
     return (
-        <div className="bg-[var(--surface-primary)]/50 border border-[var(--border)] rounded-lg p-4 space-y-3 flex flex-col justify-between">
+        <div className="bg-[var(--surface-primary)] border border-[var(--border)] rounded-lg p-4 space-y-3 flex flex-col justify-between">
             <div>
                 <div className="flex justify-between items-start">
                     <div>
@@ -123,7 +123,7 @@ const ScoutingTab: React.FC = () => {
     
     return (
         <div className="space-y-8">
-             <div className="p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)] grid grid-cols-1 md:grid-cols-2 gap-6">
+             <div className="p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label htmlFor="genre" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Target Genre</label>
                     <input id="genre" value={filters.genre} onChange={handleFilterChange} className="w-full bg-[var(--surface-secondary)] p-2 rounded-md"/>
@@ -144,7 +144,7 @@ const ScoutingTab: React.FC = () => {
             </div>
             {results && (
                 <div className="animate-fade-in">
-                     <div className="p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)] mb-6">
+                     <div className="p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] mb-6">
                         <h4 className="font-bold text-[var(--text-primary)]">Market Insight</h4>
                         <p className="text-sm text-[var(--text-secondary)] mt-1">{results.market_insight}</p>
                     </div>
@@ -179,7 +179,7 @@ const MarketAnalysisTab: React.FC = () => {
     
     return (
         <div className="space-y-8">
-            <div className="p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)] grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] grid grid-cols-1 md:grid-cols-3 gap-6">
                  <div className="md:col-span-1">
                     <label htmlFor="genre" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Target Genre</label>
                     <input id="genre" value={formData.genre} onChange={e => setFormData(p => ({ ...p, genre: e.target.value }))} className="w-full bg-[var(--surface-secondary)] p-2 rounded-md"/>
@@ -229,7 +229,7 @@ const DealMemoTab: React.FC = () => {
     
     return (
         <div className="space-y-8">
-            <div className="p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)] grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)] grid grid-cols-1 md:grid-cols-2 gap-6">
                  <div>
                     <label htmlFor="artist_name" className="block text-sm font-medium text-[var(--text-secondary)] mb-1">Artist Name</label>
                     <input id="artist_name" value={formData.artist_name} onChange={e => setFormData(p => ({ ...p, artist_name: e.target.value }))} className="w-full bg-[var(--surface-secondary)] p-2 rounded-md"/>
@@ -262,7 +262,7 @@ const DealMemoTab: React.FC = () => {
                             <p className="text-sm text-yellow-400/80">This AI-generated draft is for informational purposes only and does not constitute legal advice or a binding agreement. Always consult with a legal professional before signing any contract.</p>
                         </div>
                     </div>
-                    <div className="p-6 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)]">
+                    <div className="p-6 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)]">
                         <h4 className="text-xl font-bold text-[var(--accent-primary-hover)] mb-4">Drafted Deal Memo</h4>
                         <textarea readOnly value={result.memo_text} rows={12} className="w-full bg-[var(--background-secondary)]/50 font-mono text-sm p-4 rounded-md text-[var(--text-secondary)] border border-[var(--border-secondary)]"/>
                     </div>
@@ -283,7 +283,7 @@ const GenreTrendsTab: React.FC = () => (
                 Track genre velocity across the platform. This heatmap shows the month-over-month growth or decline of emerging and established genres, helping you spot the next big sound.
             </p>
         </div>
-        <div className="space-y-3 p-4 bg-[var(--surface-primary)]/50 rounded-lg border border-[var(--border)]">
+        <div className="space-y-3 p-4 bg-[var(--surface-primary)] rounded-lg border border-[var(--border)]">
             {mockTrends.sort((a,b) => b.growth - a.growth).map(trend => <HeatmapBar key={trend.genre} trend={trend} />)}
         </div>
     </div>
@@ -304,7 +304,7 @@ export const LabelHub: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     };
 
     return (
-         <div className="bg-[var(--surface-primary)]/50 backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in space-y-8">
+         <div className="bg-[var(--surface-primary)] backdrop-blur-sm p-6 md:p-8 rounded-2xl shadow-2xl border border-[var(--border)] animate-fade-in space-y-8">
             <div className="flex justify-between items-start">
                 <div>
                     <h2 className="text-3xl font-bold text-[var(--text-primary)]">Label & A&R Dashboard</h2>
